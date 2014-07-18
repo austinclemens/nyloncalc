@@ -19,7 +19,7 @@ theme_nyloncalc <- function(base_size = 12,base_family="") {
         axis.text.y =           element_text(size=10,colour="#535353",face="bold",family="Daniel"),
         axis.ticks =            element_blank(),
         axis.title.x =          element_text(size=12,colour="#535353",face="bold",family="Gulim",vjust=0,lineheight=3),
-        axis.title.y =          element_text(size=12,colour="#535353",face="bold",family="Gulim",angle=90,vjust=0,lineheight=3),
+        axis.title.y =          element_text(size=12,colour="#535353",face="bold",family="Gulim",angle=90,vjust=1,lineheight=3),
         axis.ticks.length =     unit(0.15, "cm"),
         axis.ticks.margin =     unit(0.1, "cm"),
 
