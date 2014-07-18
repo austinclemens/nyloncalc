@@ -8,8 +8,8 @@
 
 theme_nyloncalc <- function(base_size = 12,base_family="") {
   theme(
-        line =                  element_line(colour = "black", size = 0.5, linetype = 1,lineend = "butt"),
-        rect =                  element_rect(fill = "white", colour = "black", size = 0.5, linetype = 1),
+        line =                  element_line(colour = "#fbfbfb", size = 0.5, linetype = 1,lineend = "butt"),
+        rect =                  element_rect(fill = "white", colour = "#fbfbfb", size = 0.5, linetype = 1),
         text =                  element_text(family = base_family, face = "plain",colour = "black", size = base_size,hjust = 0.5, vjust = 0.5, angle = 0, lineheight = 0.9),
         axis.text =             element_text(size = rel(0.8), colour = "grey50"),
         strip.text =            element_text(size = rel(0.8)),
@@ -18,8 +18,8 @@ theme_nyloncalc <- function(base_size = 12,base_family="") {
         axis.text.x =           element_text(size=10,colour="#535353",face="bold",family="Daniel"),
         axis.text.y =           element_text(size=10,colour="#535353",face="bold",family="Daniel"),
         axis.ticks =            element_blank(),
-        axis.title.x =          element_text(size=12,colour="#535353",face="bold",family="Gulim",vjust=-.2),
-        axis.title.y =          element_text(size=12,colour="#535353",face="bold",family="Gulim",angle=90,vjust=0.8),
+        axis.title.x =          element_text(size=12,colour="#535353",face="bold",family="Gulim",vjust=0,lineheight=3),
+        axis.title.y =          element_text(size=12,colour="#535353",face="bold",family="Gulim",angle=90,vjust=0,lineheight=2),
         axis.ticks.length =     unit(0.15, "cm"),
         axis.ticks.margin =     unit(0.1, "cm"),
 
