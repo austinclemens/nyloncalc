@@ -1,5 +1,10 @@
-library(ggplot2)
-library(grid)
+#' Theme Function
+#'
+#' This sets all the ggplot parameters for theme_nyloncalc
+#' @keywords ggplot2 theme
+#' @export
+#' @examples
+#' theme_nyloncalc()
 
 theme_nyloncalc <- function(base_size = 12,base_family="") {
   theme(
@@ -49,6 +54,17 @@ theme_nyloncalc <- function(base_size = 12,base_family="") {
         complete = TRUE
         )
 }
+
+#' Scatter/line parameters
+#'
+#' This sets all parameters for scatter/line plots
+#' @param x Vector of x values for graph
+#' @param y Vector of y values for graph
+#' @param legend Does the graph need a legend? Defaults to 0, replace with 1.
+#' @export
+#' @examples
+#' get_params()
+
 
 get_params <- function(x,y,legend,constrain_y_min=NULL,constrain_y_max=NULL,constrain_x_min=NULL,constrain_x_max=NULL) {
 
@@ -134,87 +150,14 @@ get_params <- function(x,y,legend,constrain_y_min=NULL,constrain_y_max=NULL,cons
         return(params)
 }
 
-# simple line
-attach(data)
-params <- get_params(year,threes,0)
-attach(params)
-dev.new(width=8,height=6)
-
-ggplot(data,aes(x=year,y=threes,colour='red')) +
-        theme_nyloncalc() +
-        ggtitle("Increasing Reliance on the 3-pointer") +
-        ylab("% of Shots That are 3s") +
-        xlab("Year") +
-        geom_line(size=1.2,alpha=.8,colour="cyan") +
-        scale_x_continuous(breaks=seq(f_plotminx,c_plotmaxx,stepsizex),limits=c(plotminx,plotmaxx)) +
-        scale_y_continuous(breaks=seq(f_plotminy,c_plotmaxy,stepsizey),limits=c(plotminy,plotmaxy)) +
-        annotate("rect",xmin=rect_min_x,xmax=plot_max_x,ymin=plotminy,ymax=rect_max_y,alpha=.8) +
-        annotate("text",x=text_x,y=text_y,label=tlabel,colour="white",family=tfamily,size=4.3,vjust=.4,hjust=.5)
-ggsave(filename="/Users/austinc/Desktop/nyloncalc1.png")
-
-
-# grouped line
-attach(data)
-params <- get_params(Year,PER,1)
-attach(params)
-dev.new(width=8,height=6)
-
-ggplot(data,aes(x=Year,y=PER,group=Player,colour=Player)) +
-        theme_nyloncalc() +
-        ggtitle("Player PER Over Career") +
-        ylab("Player Efficiency Rating") +
-        xlab("Years Since Draft") +
-        scale_colour_brewer(palette="Dark2") +
-        geom_line(size=1.2,alpha=.8) +
-        scale_x_continuous(breaks=seq(f_plotminx,c_plotmaxx,stepsizex),limits=c(plotminx,plotmaxx)) +
-        scale_y_continuous(breaks=seq(f_plotminy,c_plotmaxy,stepsizey),limits=c(plotminy,plotmaxy)) +
-        annotate("rect",xmin=rect_min_x,xmax=plot_max_x,ymin=plotminy,ymax=rect_max_y,alpha=.8) +
-        annotate("text",x=text_x,y=text_y,label=tlabel,colour="white",family=tfamily,size=4.3,vjust=.4,hjust=.5)
-ggsave(filename="/Users/austinc/Desktop/nyloncalc2.png")
-
-
-
-attach(data)
-params <- get_params(Year,PER,0)
-dev.new(width=8,height=6)
-
-ggplot(data,aes(x=Year,y=PER,group=Player,colour=Player)) +
-        theme_nyloncalc() +
-        ggtitle("Player PER Over Career") +
-        ylab("Player Efficiency Rating") +
-        xlab("Years Since Draft") +
-        scale_colour_brewer(palette="Dark2") +
-        theme(legend.position="none") +
-        geom_line(size=1.2,alpha=.8) +
-        scale_x_continuous(breaks=seq(floor(params$plot_min_x),ceiling(params$plot_max_x),params$step_size_x),limits=c(params$plot_min_x,params$plot_max_x)) +
-        scale_y_continuous(breaks=seq(floor(params$plot_min_y),ceiling(params$plot_max_y),params$step_size_y),limits=c(params$plot_min_y,params$plot_max_y)) +
-        annotate("rect",xmin=params$rect_min_x,xmax=params$plot_max_x,ymin=params$plot_min_y,ymax=params$rect_max_y,alpha=.8) +
-        annotate("text",x=params$text_x,y=params$text_y,label="Nylon Calculus",colour="#ffffff",family="Chalk Line Outline",size=4.3,vjust=.4,hjust=.5)
-ggsave(filename="/Users/austinc/Desktop/nyloncalc_1.png")
-
-
-
-
-attach(data2)
-params <- get_params(mid,drtg,0)
-dev.new(width=8,height=6)
-
-ggplot(data2,aes(x=mid,y=drtg,group=mavs,label=Over)) +
-        theme_nyloncalc() +
-        ggtitle("Teams That Force Midrange Shots Excel Defensively") +
-        ylab("Defensive Rating") +
-        xlab("% of Opponent Shots Taken from Midrange") +
-        geom_point(shape=1,alpha=.8) +
-        geom_smooth() +
-        geom_text(size=2.5,family="Gulim",vjust=data2$vjust+.3,hjust=data2$hjust+.5) +
-        scale_x_continuous(breaks=seq(floor(params$plot_min_x),ceiling(params$plot_max_x),params$step_size_x),limits=c(params$plot_min_x,params$plot_max_x)) +
-        scale_y_continuous(breaks=seq(floor(params$plot_min_y),ceiling(params$plot_max_y),params$step_size_y),limits=c(params$plot_min_y,params$plot_max_y)) +
-        annotate("rect",xmin=params$rect_min_x,xmax=params$plot_max_x,ymin=params$plot_min_y,ymax=params$rect_max_y,alpha=.8) +
-        annotate("text",x=params$text_x,y=params$text_y,label="Nylon Calculus",colour="#ffffff",family="Chalk Line Outline",size=4.3,vjust=.4,hjust=.5)
-ggsave(filename="/Users/austinc/Desktop/nyloncalc2.png")
-
-
-
+#' Histogram parameters
+#'
+#' This sets all parameters for histograms
+#' @param x Vector of x values for graph
+#' @param limit_x highest value for x, defaults to 0, which lets ggplot pick
+#' @export
+#' @examples
+#' get_params_hist()
 
 
 get_params_hist <- function(x,limit_x) {
@@ -255,37 +198,15 @@ get_params_hist <- function(x,limit_x) {
         return(params)
 }
 
-attach(data3)
-params <- get_params_hist(shot_distance,0)
-dev.new(width=8,height=6)
-
-ggplot(data3,aes(x=shot_distance)) +
-        theme_nyloncalc() +
-        ggtitle("The Distribution of NBA Shots") +
-        ylab("Density") +
-        xlab("Distance From Basket (feet)") +
-        geom_density(alpha=.4,fill="#1b9e77") +
-        scale_x_continuous(breaks=seq(params$plot_min_x,params$plot_max_x,params$step_size_x),limits=c(params$plot_min_x,params$plot_max_x)) +
-        annotate("rect",xmin=params$rect_min_x,xmax=params$plot_max_x,ymin=params$plot_min_y,ymax=params$rect_max_y,alpha=.8) +
-        annotate("text",x=params$text_x,y=params$text_y,label="Nylon Calculus",colour="#ffffff",family="Chalk Line Outline",size=4.3,vjust=.4,hjust=.5)
-ggsave(filename="/Users/austinc/Desktop/nyloncalc3_1.png")
-
-attach(data3)
-params <- get_params_hist(shot_distance,38)
-dev.new(width=8,height=6)
-
-ggplot(data3,aes(x=shot_distance)) +
-        theme_nyloncalc() +
-        ggtitle("The Distribution of NBA Shots") +
-        ylab("Density") +
-        xlab("Distance From Basket (feet)") +
-        geom_density(alpha=.4,fill="#1b9e77") +
-        scale_x_continuous(breaks=seq(params$plot_min_x,params$plot_max_x,params$step_size_x),limits=c(params$plot_min_x,params$plot_max_x)) +
-        annotate("rect",xmin=params$rect_min_x,xmax=params$plot_max_x,ymin=params$plot_min_y,ymax=params$rect_max_y,alpha=.8) +
-        annotate("text",x=params$text_x,y=params$text_y,label="Nylon Calculus",colour="#ffffff",family="Chalk Line Outline",size=4.3,vjust=.4,hjust=.5)
-ggsave(filename="/Users/austinc/Desktop/nyloncalc3_2.png")
-
-
+#' Scatter/line parameters
+#'
+#' This sets all parameters for bar charts
+#' @param x Vector of x values for graph
+#' @param y Vector of y values for graph
+#' @param legend Does the graph need a legend? Defaults to 0, replace with 1.
+#' @export
+#' @examples
+#' get_params_bar()
 
 
 get_params_bar <- function(x,y,legend) {
@@ -325,56 +246,3 @@ get_params_bar <- function(x,y,legend) {
 
         return(params)
 }
-
-attach(data4)
-params <- get_params_bar(Player,TS.,1)
-dev.new(width=8,height=6)
-
-ggplot(data4,aes(x=Player,y=TS.,fill=Condition)) +
-        theme_nyloncalc() +
-        ggtitle("Aldridge's Effect on Teammates") +
-        ylab("True Shooting %") +
-        geom_bar(stat="identity",alpha=.8, position="dodge") +
-        scale_y_continuous(breaks=seq(params$plot_min_y,params$plot_max_y,params$step_size_y),limits=c(params$plot_min_y,params$plot_max_y)) +
-        annotate("rect",xmin=params$rect_min_x,xmax=params$plot_max_x,ymin=0,ymax=params$rect_max_y,alpha=.8) +
-        annotate("text",x=params$text_x,y=params$text_y,label="Nylon Calculus",colour="#ffffff",family="Chalk Line Outline",size=4.3,vjust=.4,hjust=.5)
-
-ggsave(filename="/Users/austinc/Desktop/nyloncalc4.png")
-
-
-
-attach(data5)
-params <- get_params(Height,X3PTA.FGA,1)
-dev.new(width=8,height=6)
-
-ggplot(data5,aes(x=Height,y=X3PTA.FGA,group=group,colour=group,shape=a)) +
-        theme_nyloncalc() +
-        ggtitle("Visualizing the Rise of the Stretch 4") +
-        ylab("3PTA/FGA") +
-        xlab("Height in Inches") +
-        geom_point(shape=1,alpha=.8,size=3,shape=a) +
-        scale_x_continuous(breaks=seq(floor(params$plot_min_x),ceiling(params$plot_max_x),params$step_size_x),limits=c(params$plot_min_x,params$plot_max_x)) +
-        scale_y_continuous(breaks=seq(floor(params$plot_min_y),ceiling(params$plot_max_y),params$step_size_y),limits=c(params$plot_min_y,params$plot_max_y)) +
-        annotate("rect",xmin=params$rect_min_x,xmax=params$plot_max_x,ymin=params$plot_min_y,ymax=params$rect_max_y,alpha=.8) +
-        annotate("text",x=params$text_x,y=params$text_y,label="Nylon Calculus",colour="#ffffff",family="Chalk Line Outline",size=4.3,vjust=.4,hjust=.5)
-ggsave(filename="/Users/austinc/Desktop/nyloncalc5.png")
-
-
-attach(data)
-dev.new(width=8,height=6)
-params <- get_params(year,threes,0)
-
-ggplot(data,aes(x=year,y=threes,colour='red')) +
-        theme_nyloncalc() +
-        ggtitle("Increasing Reliance on the 3-pointer") +
-        ylab("% of Shots That are 3s") +
-        xlab("Year") +
-        geom_line(size=1.2,alpha=.8,colour="cyan") +
-        scale_x_continuous(breaks=seq(floor(params$plot_min_x),ceiling(params$plot_max_x),params$step_size_x),limits=c(params$plot_min_x,params$plot_max_x)) +
-        scale_y_continuous(breaks=seq(floor(params$plot_min_y),ceiling(params$plot_max_y),params$step_size_y),limits=c(params$plot_min_y,params$plot_max_y)) +
-        annotate("rect",xmin=params$rect_min_x,xmax=params$plot_max_x,ymin=params$plot_min_y,ymax=params$rect_max_y,alpha=.8) +
-        annotate("text",x=params$text_x,y=params$text_y,label="Nylon Calculus",colour="#ffffff",family="Chalk Line Outline",size=4.3,vjust=.4,hjust=.5)
-ggsave(filename="/Users/austinc/Desktop/nyloncalc6_1.png")
-
-
-
